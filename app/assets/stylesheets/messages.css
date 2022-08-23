@@ -1,0 +1,44 @@
+.wrapper {
+  display: flex;
+}
+.side-bar {
+  background-color: #253141;
+  width: 300px;
+  /* 「px」は固定値なので、横幅は必ず300pxとなる */
+  height: 100vh;
+  /* vh」は「viewport height」の略称で、相対的な高さを表す。viewport（開いているブラウザのこと）の高さに応じて大きさが変わる */
+}
+.side-bar-header {
+  height: 100px;
+  padding: 0 20px;
+
+}
+.rooms {
+  background-color: #2F3E51;
+  height: calc(100vh - 100px);
+  padding: 0 20px;
+
+}
+.chat {
+  background-color: #FFFFFF;
+  width: calc(100vw - 300px);
+  /* 既に「side-bar = 300px」と決まっているので、残ったchatの横幅は（全体の横幅 - 300px）となる。 */
+/* 「全体の横幅」というのは、表示される画面の幅に応じて変わる。（相対値） */
+}
+.chat-header {
+  height: 100px;
+  padding: 0 40px;
+
+}
+.messages {
+  background-color: #FAFAFA;
+  height: calc(100vh - 100px - 90px);
+  padding: 46px 40px 0;
+
+}
+.form {
+  background-color: #DDDDDD;
+  height: 90px;
+  padding: 20px 40px;
+
+}
