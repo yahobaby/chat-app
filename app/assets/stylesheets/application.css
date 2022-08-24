@@ -13,3 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+ * {
+  box-sizing: border-box;
+}
+/* image.pngpaddingやborderの設定を行っても、要素の大きさはwidthやheightで指定したサイズのまま変わらなくなります。 */
