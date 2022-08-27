@@ -1,5 +1,9 @@
 # ターミナルにて、% rails g controller roomsでroomsコントローラー生成すると、こちらのファイルが自動生成
 class RoomsController < ApplicationController
+  def index
+    # ルートパスを作成したrooms/index.html.erbに変更
+  end
+
   def new
     @room = Room.new
     # チャットルームの新規作成なので「new」アクションを定義
