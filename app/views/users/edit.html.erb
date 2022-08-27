@@ -3,7 +3,10 @@
     <div class='account-page__inner--left account-page__header'>
       <h2>Edit Account</h2>
       <h5>アカウントの編集</h5>
-      <%= link_to "ログアウト", "#", class: 'btn'%>
+      <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'btn'%>
+<%# 「rails routes」コマンドを実行し、どのようなリンク先を指定すれば、該当のアクションが動くのか確認 %>
+      <%# link_toのパスを、destroy_user_session_pathと指定 %>
+      <%# HTTPメソッドのdeleteを指定すると、ログイン時に使用されるdeviseのsessionsコントローラーのdestroyアクションが実行される。 %>
       <%= link_to "チャットページに戻る", :back, class: 'btn'%>
     </div>
     <div class='account-page__inner--right user-form'>
