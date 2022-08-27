@@ -1,6 +1,7 @@
 <div class='chat-room-form'>
   <h1>新規チャットルーム</h1>
   <%=form_with model: @room, local: true do |f|%>
+<%# form_withの第一引数である@roomは、まだ定義されていない変数＆roomsコントローラーで定義する %>
     <div class='chat-room-form__field'>
       <div class='chat-room-form__field--left'>
         <%= f.label :name, :チャットルーム名, class: 'chat-room-form__label'%>
