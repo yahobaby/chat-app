@@ -55,3 +55,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'devise'
 # 運用・テスト・すべての環境で使用するので、gem deviseは一番下に記述する。
+
+gem 'pry-rails'
+# アプリを一時停止して値を確認するため、にpry-railsをインストール

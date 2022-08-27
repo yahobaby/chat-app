@@ -1,0 +1,69 @@
+<div class='chat-room-form'>
+  <h1>新規チャットルーム</h1>
+  <%=form_with model: @room, local: true do |f|%>
+<%# form_withの第一引数である@roomは、まだ定義されていない変数＆roomsコントローラーで定義する %>
+    <div class='chat-room-form__field'>
+      <div class='chat-room-form__field--left'>
+        <%= f.label :name, :チャットルーム名, class: 'chat-room-form__label'%>
+      </div>
+      <div class='chat-room-form__field--right'>
+        <%= f.text_field :name, class: 'chat__room_name chat-room-form__input', placeholder: 'チャットルーム名を入力してください'%>
+      </div>
+    </div>
+    <div class='chat-room-form__field'>
+    </div>
+    <div class='chat-room-form__field'>
+      <div class='chat-room-form__field--left'>
+        <label class='chat-room-form__label' for='chat_room_チャットメンバー'>チャットメンバー</label>
+      </div>
+      <div class='chat-room-form__field--right'>
+      <%# DBに保存されているユーザーの情報を取得して、プルダウンに表示する実装 %>
+
+          <%# <select> %>
+          <select name="room[user_ids][]">
+          <%# select要素のname属性にroom[user_ids][]を指定し、option要素のvalue属性にuser.idを指定＆このように記述することで、これまでとは異なる形でパラメーターが送信されるため、paramsは以下のようになります。 %>
+          <%# {"room" => {"user_ids" => ["選択したユーザーのid"]}} %>
+          <!-- room[user_ids]で送られるparamsの中身 
+          {"room" => {"user_ids" => "値"}} 
+          room[user_ids]という記述は、キーに対する値という通常のパラメーターと異なり、値としてさらにハッシュを入れ子にすることを示すもの !-->
+
+          <!--room[user_ids][]で送られるparamsの中身
+          {"room" => {"user_ids" => ["値"]}}
+          末尾についた[]について: この記述は、キーに対する値を配列として格納することを示すもの。これにより、1つのキーに対して、複数の値を受け取ることができるようになる。!-->
+
+
+          <%# 選択肢1つ目にはvalue属性を追加し、2つ目以降はユーザーの名前を全員分繰り返し表示 %>
+          <option value="">チャットするユーザーを選択してください</option>
+          <%# <% User.all.each do |user| %>
+          <!-- 現在ログインしているユーザー名も一緒に、選択肢の中へ含まれてしまっており、現在ログインしているユーザーをeachメソッドの処理から取り除く。
+          モデル名.where("条件")と記述すると、条件に一致したレコードを配列として取得でき、whereメソッドに続けてnotメソッドを追記すると、モデル名.where.not("条件")は、条件に一致したレコード以外の値を配列として
+          取得できる。
+          !-->
+
+          <% User.where.not(id: current_user.id).each do |user| %>
+            <%# <option><%= user.name %>
+          <option value=<%= user.id %>><%= user.name %></option>
+          <% end %>
+        </select>
+
+        <%# 現在ログイン中のユーザーが持つidをparamsに含める %>
+        <input name="room[user_ids][]" type="hidden" value=<%= current_user.id %>>
+        <!--
+        ・type属性にhiddenを指定することで、画面上には表示されないinput要素を作成 
+        ・name属性にroom[user_ids][]を指定し、room[user_ids]をキーに対する値を配列で受け取る仕組み
+        ・value属性にはcurrent_user.idを指定しているため、room[user_ids]キーに対して、ログイン中ユーザーのidを配列として格納し、コントローラーへ送信
+        ・コントローラーに送られるparamsは
+        {"room" => {"user_ids" => ["選択したユーザーのid", "現在ログインしているユーザーのid"]}}
+        になる
+        ・room[user_ids]に2種類のユーザーidを格納できるようになった。
+        !-->
+      </div>
+    </div>
+    <div class='chat-room-form__field'>
+      <div class='chat-room-form__field--left'></div>
+      <div class='chat-room-form__field--right'>
+        <%= f.submit class: 'chat-room-form__action-btn'%>
+      </div>
+    </div>
+  <% end %>
+</div>
