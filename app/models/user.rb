@@ -10,4 +10,9 @@ class User < ApplicationRecord
   has_many :rooms, through: :room_users
   # 1つのチャットルームには、2人のユーザーが存在する。
 # また、1人のユーザーは複数のチャットルームに参加出来る。
+  has_many :messages
+  # 1人のユーザーは、複数のメッセージを送信できる。
+  # つまり、usersテーブルに対して、messagesテーブルは、1対多の関係になる。
+
+
 end
