@@ -1,7 +1,13 @@
 <div class="chat-header">
   <div class="left-header">
     <div class="header-title">
-      hogefuga
+
+      <%= @room.name %>
+      <%# チャットルーム名の情報は、すでにコントローラapp/controllers/messages_controller.rbのindexアクションの@roomで取得できているため %>
+
+
+    <%# ヘッダーのチャットルーム名を表示するため、仮チャットルーム名 hogefuga削除 %>
+      <%# hogefuga %>
     </div>
   </div>
   <div class="right-header">
