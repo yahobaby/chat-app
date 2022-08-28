@@ -12,7 +12,8 @@
 </div>
 
 <div class="messages">
-  <div class="message">
+<!--不要となる仮データ部分を削除!-->
+  <%# <div class="message">
     <div class="upper-message">
       <div class="message-user">
         Tom
@@ -42,7 +43,10 @@
         こんばんは
       </div>
     </div>
-  </div>
+  </div> %>
+
+    <%= render partial: 'message', collection: @messages %>
+<%# 新たに_message.html.erbを部分テンプレートとして、読み込み %>
 </div>
 
 <%# メッセージを保存できるように、ビューを編集 %>
