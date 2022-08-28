@@ -1,4 +1,39 @@
 class MessagesController < ApplicationController
   def index
+    @message = Message.new
+    # @messageには、Message.newで生成した、Messageモデルのインスタンス情報を代入
+    @room = Room.find(params[:room_id])
+    # @roomには、Room.find(params[:room_id])と記述することで、paramsに含まれているroom_idを代入
+    # ルーティングをネストしているため/rooms/:room_id/messagesといったパスになる。
+    # パスにroom_idが含まれているため、paramsというハッシュオブジェクトの中に、room_idという値が存在する。そのため、params[:room_id]と記述することでroom_idを取得できまる。
+  end
+
+  def create
+    # messagesコントローラーにcreateアクションを定義
+    @room = Room.find(params[:room_id])
+    @message = @room.messages.new(message_params)
+    # @room.messages.newでチャットルームに紐づいたメッセージのインスタンスを生成し、message_paramsを引数にして、privateメソッドを呼び出す。
+  
+
+    # createアクション内に、メッセージを保存できた場合とできなかった場合で条件分岐の処理
+    # @message.saveでメッセージの保存に成功した場合、redirect_toメソッドを用いてmessagesコントローラーのindexアクションに再度リクエストを送信し、新たにインスタンス変数を生成する。これによって保存後の情報に更新される。
+    if @message.save
+      redirect_to room_messages_path(@room)
+    else
+      render :index
+      # メッセージの保存に失敗した場合、renderメソッドを用いてindexアクションのindex.html.erbを表示するように指定
+      # このとき、createアクションのインスタンス変数はそのままindex.html.erbに渡され、同じページに戻る。
+    end
+  
+    # @message.save
+    # 生成したインスタンスを@messageに代入し、saveメソッドでメッセージの内容をmessagesテーブルに保存
+  end
+
+  private
+# privateメソッドとしてmessage_paramsを定義し、メッセージの内容contentをmessagesテーブルへ保存できるようにする。
+# パラメーターの中に、ログインしているユーザーのidと紐付いている、メッセージの内容contentを受け取れるように許可
+
+def message_params
+    params.require(:message).permit(:content).merge(user_id: current_user.id)
   end
 end

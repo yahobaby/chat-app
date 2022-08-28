@@ -45,6 +45,25 @@
   </div>
 </div>
 
+<%# メッセージを保存できるように、ビューを編集 %>
+<%# formタグ、inputタグを用いて記述されている箇所をform_withを使って書き換える。 %>
+
+<%= form_with model: [@room, @message], class: 'form', local: true do |f| %>
+<%# form_withの引数に@room, @messageの2つを渡している %>
+<%# これは、messagesのルーティングがroomsにネストされているため。チャットルームとメッセージとの間には、あるチャットルームに属しているメッセージ、という親子関係がある。 %>
+<%# form_withのmodelオプションに記述した@roomには「指定のチャットルームのレコード情報」、@messageには「Messageモデルの空のインスタンス（Message.new）」をあらかじめセットしておく必要がある。 %>
+
+  <div class="form-input">
+    <%= f.text_field :content, class: 'form-message', placeholder: 'type a message' %>
+    <label class="form-image">
+      <span class="image-file">画像</span>
+      <%= f.file_field :image, class: 'hidden' %>
+    </label>
+  </div>
+  <%= f.submit '送信', class: 'form-submit' %>
+<% end %>
+
+<!--
 <div class="form">
   <div class="form-input">
     <input class="form-message" placeholder= "type a message">
@@ -56,3 +75,4 @@
   </div>
   <input class="form-submit" type="submit" value="送信">
 </div>
+!-->

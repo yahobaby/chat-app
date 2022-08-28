@@ -20,7 +20,12 @@
   <!--「|room|」の部分は変数名なので命名規則はないが、分かりやすいように「room」にした。!-->
     <div class="room">
       <div class="room-name">
-        <a href="#"><%= room.name %></a>
+       <%= link_to room.name, room_messages_path(room) %>
+       <!--サイドバーのチャットルーム名に、 <%= link_to room.name, room_messages_path(room) %>とリンクを設定。
+        パスにroomを引数とすることで、メッセージと紐付いているチャットルームのidを持たせることができる。
+        したがって、チャットルーム名をクリックすると、messagesコントローラーのindexアクションが実行され、チャットルームのページに遷移する
+        !-->
+       <!-- <a href="#"><%= room.name %></a> !-->
         <%# room.nameの「name」は、roomsテーブルのカラム名 %>
       </div>
     </div>
