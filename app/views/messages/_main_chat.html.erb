@@ -1,18 +1,36 @@
 <div class="chat-header">
   <div class="left-header">
     <div class="header-title">
-      hogefuga
+
+      <%= @room.name %>
+      <%# チャットルーム名の情報は、すでにコントローラapp/controllers/messages_controller.rbのindexアクションの@roomで取得できているため %>
+
+
+    <%# ヘッダーのチャットルーム名を表示するため、仮チャットルーム名 hogefuga削除 %>
+      <%# hogefuga %>
     </div>
   </div>
   <div class="right-header">
     <div class="header-button">
-      <a href="#">チャットを終了する</a>
+      <%= link_to "チャットを終了する", room_path(@room), method: :delete %>
+<%# "チャットを終了する"をクリックすると、チャットルームが削除されるようにリンクを設定 %>
+<%# 「rails routes」コマンドを実行すると、roomsコントローラーのdestroyアクションに対応するPrefixは、roomということが分かります。 %>
+<%# したがって、削除のパスはroom_pathとな流。 %>
+<%# 削除するチャットルームを区別するために、定義している@roomを引数にし、room_path(@room)と指定 %>
+<%# HTTPメソッドのdeleteを指定すると、roomsコントローラーのdestroyアクションが実行される。 %>
+<%# destroyアクションが実行されると、roomが削除される %>
+
+
+
+
+      <%# <a href="#">チャットを終了する</a> %>
     </div>
   </div>
 </div>
 
 <div class="messages">
-  <div class="message">
+<!--不要となる仮データ部分を削除!-->
+  <%# <div class="message">
     <div class="upper-message">
       <div class="message-user">
         Tom
@@ -42,9 +60,31 @@
         こんばんは
       </div>
     </div>
-  </div>
+  </div> %>
+
+    <%= render partial: 'message', collection: @messages %>
+<%# 新たに_message.html.erbを部分テンプレートとして、読み込み %>
 </div>
 
+<%# メッセージを保存できるように、ビューを編集 %>
+<%# formタグ、inputタグを用いて記述されている箇所をform_withを使って書き換える。 %>
+
+<%= form_with model: [@room, @message], class: 'form', local: true do |f| %>
+<%# form_withの引数に@room, @messageの2つを渡している %>
+<%# これは、messagesのルーティングがroomsにネストされているため。チャットルームとメッセージとの間には、あるチャットルームに属しているメッセージ、という親子関係がある。 %>
+<%# form_withのmodelオプションに記述した@roomには「指定のチャットルームのレコード情報」、@messageには「Messageモデルの空のインスタンス（Message.new）」をあらかじめセットしておく必要がある。 %>
+
+  <div class="form-input">
+    <%= f.text_field :content, class: 'form-message', placeholder: 'type a message' %>
+    <label class="form-image">
+      <span class="image-file">画像</span>
+      <%= f.file_field :image, class: 'hidden' %>
+    </label>
+  </div>
+  <%= f.submit '送信', class: 'form-submit' %>
+<% end %>
+
+<!--
 <div class="form">
   <div class="form-input">
     <input class="form-message" placeholder= "type a message">
@@ -56,3 +96,4 @@
   </div>
   <input class="form-submit" type="submit" value="送信">
 </div>
+!-->
