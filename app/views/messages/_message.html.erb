@@ -21,5 +21,12 @@
       <%= message.content %>
       <%# messagesテーブルのcontentカラムから、メッセージの内容を取得 %>
     </div>
+        <%= image_tag message.image.variant(resize: '500x500'), class: 'message-image' if message.image.attached? %>
+        <%# variantメソッドを使用して、横幅と高さを指定 220901 %>
+
+        <%# <%= image_tag message.image, class: 'message-image' if message.image.attached? %>
+        <%# _message.html.erbにimage_tagメソッドを記述して、画像を表示 220901 %>
+        <%# ifを使って、要素の生成に条件をつけ、attached?メソッドで画像の添付をチェック 220901 %>
+        <%# if message.image.attached?と記述することで、画像が存在する場合のみimage_tagが読み込まれるようになる。220901 %>
   </div>
 </div>
