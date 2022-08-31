@@ -58,3 +58,12 @@ gem 'devise'
 
 gem 'pry-rails'
 # アプリを一時停止して値を確認するため、にpry-railsをインストール
+
+# ImageMagick:コマンドラインから画像に処理を加えることができるツール
+# ImageMagickはGemではなく、ソフトウェアの為、Homebrewからインストール
+
+gem 'mini_magick'
+# ImageMagickの機能をRubyで扱えるようにしてくれるGemで、RailsでImageMagickを扱うために必要
+
+gem 'image_processing', '~> 1.2'
+# MiniMagickでは提供できない、画像サイズを調整する機能を提供するGem
