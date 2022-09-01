@@ -1,0 +1,4 @@
+--require spec_helper
+
+--format documentation
+; テスト結果のログを見やすく、テストコードの結果をターミナル上で可視化させる 220901
